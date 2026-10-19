@@ -58,5 +58,36 @@ services:
     depends_on:
       - spark-master
 
+  namenode:
+    image: apache/hadoop:3.3.6
+    container_name: namenode
+    hostname: namenode
+    command: ["hdfs", "namenode"]
+    env_file:
+      - ./hadoop.env
+    environment:
+      ENSURE_NAMENODE_DIR: /tmp/hadoop-root/dfs/name
+    ports:
+      - "9870:9870"
+      - "8020:8020"
+
+  datanode-1:
+    image: apache/hadoop:3.3.6
+    container_name: datanode-1
+    command: ["hdfs", "datanode"]
+    env_file:
+      - ./hadoop.env
+    depends_on:
+      - namenode
+
+  datanode-2:
+    image: apache/hadoop:3.3.6
+    container_name: datanode-2
+    command: ["hdfs", "datanode"]
+    env_file:
+      - ./hadoop.env
+    depends_on:
+      - namenode
+
 volumes:
   mongo_data:
