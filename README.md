@@ -43,7 +43,7 @@ docs/          Design notes, literature review, diagrams
 ### Infrastructure
 - [x] MongoDB
 - [x] Kafka
-- [ ] Spark cluster (master and workers)
+- [x] Spark cluster (master and workers)
 - [ ] HDFS (namenode and datanodes)
 - [ ] Full stack verified end to end
 
