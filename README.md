@@ -38,11 +38,11 @@ docs/          Design notes, literature review, diagrams
 
 ### Foundation
 - [x] Repository created
-- [ ] README, `.gitignore` and `requirements.txt`
+- [x] README, `.gitignore` and `requirements.txt`
 
 ### Infrastructure
-- [ ] MongoDB
-- [ ] Kafka
+- [x] MongoDB
+- [x] Kafka
 - [ ] Spark cluster (master and workers)
 - [ ] HDFS (namenode and datanodes)
 - [ ] Full stack verified end to end
