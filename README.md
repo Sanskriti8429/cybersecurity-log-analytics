@@ -45,13 +45,13 @@ docs/          Design notes, literature review, diagrams
 - [x] Kafka
 - [x] Spark cluster (master and workers)
 - [x] HDFS (namenode and datanodes)
-- [ ] Full stack verified end to end
+- [x] Full stack verified end to end
 
 ### Data
 - [ ] Synthetic log generator
 - [ ] Attack simulation with Kali tools
 - [ ] Public labeled datasets integrated
-- [ ] Kafka ingestion and HDFS storage
+- [x] Kafka ingestion and HDFS storage
 
 ### Detection
 - [ ] Rule-based detection (batch)
