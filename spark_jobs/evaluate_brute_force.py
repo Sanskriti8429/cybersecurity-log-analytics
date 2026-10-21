@@ -45,4 +45,6 @@ f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.
 
 print(f"TP={tp} FP={fp} FN={fn} TN={tn}")
 print(f"Precision={precision:.4f} Recall={recall:.4f} F1={f1:.4f}")
+print("Per-label results (predicted=1 means the rule flagged it):")
+scored.groupBy("label", "predicted").count().orderBy("label", "predicted").show()
 spark.stop()
