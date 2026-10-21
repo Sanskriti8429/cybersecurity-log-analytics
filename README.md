@@ -54,7 +54,7 @@ docs/          Design notes, literature review, diagrams
 - [x] Kafka ingestion and HDFS storage
 
 ### Detection
-- [ ] Rule-based detection (batch)
+- [x] Rule-based detection (batch)
 - [ ] Rule-based detection (streaming)
 - [ ] ML-based detection
 - [ ] Alert storage in MongoDB
