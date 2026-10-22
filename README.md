@@ -48,7 +48,7 @@ docs/          Design notes, literature review, diagrams
 - [x] Full stack verified end to end
 
 ### Data
-- [ ] Synthetic log generator
+- [x] Synthetic log generator
 - [ ] Attack simulation with Kali tools
 - [ ] Public labeled datasets integrated
 - [x] Kafka ingestion and HDFS storage
