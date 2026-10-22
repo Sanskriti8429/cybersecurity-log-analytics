@@ -136,6 +136,11 @@ def generate_firewall(n_normal, n_scans, start=None, window_seconds=600):
     events.sort(key=lambda e: e[0])
     return events
 
+def _seed(seed):
+    if seed is not None:
+        random.seed(seed)
+        Faker.seed(seed)
+
 if __name__ == "__main__":
     from collections import Counter
 
