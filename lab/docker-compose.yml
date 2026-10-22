@@ -1,0 +1,15 @@
+services:
+  ssh-target:
+    build: ./target
+    container_name: ssh-target
+    networks: [lab]
+
+  kali:
+    build: ./kali
+    container_name: kali
+    depends_on: [ssh-target]
+    networks: [lab]
+
+networks:
+  lab:
+    internal: true
