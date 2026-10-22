@@ -9,6 +9,8 @@ spark = (
 TOPICS = {
     "auth-logs": "hdfs://namenode:8020/logs/raw/auth",
     "ground-truth": "hdfs://namenode:8020/logs/truth",
+    "firewall-logs": "hdfs://namenode:8020/logs/raw/firewall",
+    "firewall-truth": "hdfs://namenode:8020/logs/firewall_truth",
 }
 
 for topic, path in TOPICS.items():

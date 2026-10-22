@@ -1,5 +1,5 @@
 pyspark==3.5.3
-confluent-kafka
+kafka-python
 pymongo
 faker
 pandas
