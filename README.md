@@ -49,7 +49,7 @@ docs/          Design notes, literature review, diagrams
 
 ### Data
 - [x] Synthetic log generator
-- [ ] Attack simulation with Kali tools
+- [x] Attack simulation with Kali tools
 - [x] Public labeled datasets integrated
 - [x] Kafka ingestion and HDFS storage
 
