@@ -87,6 +87,54 @@ def generate(n_normal, n_bursts, n_noisy=2, n_slow=2, n_distributed=2,
     events.sort(key=lambda e: e[0])
     return events
 
+FW_HOST = "server01"
+SERVER_IP = "10.0.0.5"
+COMMON_PORTS = [22, 80, 443, 3306, 8080]
+
+
+def fw_line(ts, action, src, dport, sport):
+    """Build one UFW-style firewall line."""
+    stamp = f"{ts:%b} {ts.day:>2} {ts:%H:%M:%S}"
+    return (
+        f"{stamp} {FW_HOST} kernel: [UFW {action}] IN=eth0 OUT= SRC={src} DST={SERVER_IP} "
+        f"LEN=60 TTL={random.randint(40, 64)} PROTO=TCP SPT={sport} DPT={dport} SYN"
+    )
+
+
+def normal_fw_event(ts):
+    """Normal traffic: internal hosts reach allowed services, plus rare stray blocked packets."""
+    if random.random() < 0.97:
+        line = fw_line(ts, "ALLOW", fake.ipv4_private(),
+                       random.choice([22, 80, 443]), random.randint(1024, 65535))
+    else:
+        line = fw_line(ts, "BLOCK", fake.ipv4_public(),
+                       random.choice(COMMON_PORTS), random.randint(1024, 65535))
+    return (ts, line, "normal")
+
+
+def port_scan(start_ts):
+    """One attacker IP probing many different ports within seconds."""
+    ip = fake.ipv4_public()
+    ts = start_ts
+    events = []
+    for dport in random.sample(range(1, 10000), random.randint(100, 500)):
+        ts += timedelta(milliseconds=random.randint(5, 100))
+        line = fw_line(ts, "BLOCK", ip, dport, random.randint(1024, 65535))
+        events.append((ts, line, "port_scan"))
+    return events
+
+
+def generate_firewall(n_normal, n_scans, start=None, window_seconds=600):
+    """Return (timestamp, line, label) firewall events sorted by time."""
+    start = start or datetime.now()
+    events = [
+        normal_fw_event(start + timedelta(seconds=random.uniform(0, window_seconds)))
+        for _ in range(n_normal)
+    ]
+    for _ in range(n_scans):
+        events.extend(port_scan(start + timedelta(seconds=random.uniform(0, window_seconds))))
+    events.sort(key=lambda e: e[0])
+    return events
 
 if __name__ == "__main__":
     from collections import Counter
