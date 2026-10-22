@@ -2,6 +2,7 @@ services:
   ssh-target:
     build: ./target
     container_name: ssh-target
+    cap_add: [NET_RAW]
     networks: [lab]
 
   kali:
