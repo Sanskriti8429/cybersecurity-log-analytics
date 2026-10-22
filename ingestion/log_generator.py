@@ -3,33 +3,47 @@ from datetime import datetime, timedelta
 
 from faker import Faker
 
-fake= Faker()
+fake = Faker()
 
-HOST= "server01"
-USERS= ["admin", "root", "ubuntu","deploy","Priya", "Raj", "Payal", "Rohan"]
-ATTACK_TARGETS= ["admin", "root", "ubuntu"]
+HOST = "server01"
+USERS = ["admin", "root", "ubuntu", "deploy", "Priya", "Raj", "Payal", "Rohan"]
+ATTACK_TARGETS = ["admin", "root", "ubuntu"]
+
+
+def _seed(seed):
+    """Make runs repeatable. Faker has its own generator, so seed both."""
+    if seed is not None:
+        random.seed(seed)
+        Faker.seed(seed)
+
+
+# ---------------------------------------------------------------- auth logs
 
 def auth_line(ts, success, user, ip, port):
-    stamp=  f"{ts:%b} {ts.day:>2} {ts:%H:%M:%S}"
-    pid= random.randint(1000,9999)
-    outcome= "Accepted" if success else "Failed"
+    stamp = f"{ts:%b} {ts.day:>2} {ts:%H:%M:%S}"
+    pid = random.randint(1000, 9999)
+    outcome = "Accepted" if success else "Failed"
     return f"{stamp} {HOST} sshd[{pid}]: {outcome} password for {user} from {ip} port {port} ssh2"
 
+
 def normal_event(ts):
-    success= random.random() <0.95
-    line= auth_line(ts, success, random.choice(USERS), fake.ipv4_private(), random.randint(1024, 65535))
-    return(ts, line, "normal")
+    success = random.random() < 0.95
+    line = auth_line(ts, success, random.choice(USERS), fake.ipv4_private(),
+                     random.randint(1024, 65535))
+    return (ts, line, "normal")
+
 
 def brute_force_burst(start_ts):
-    ip= fake.ipv4_public()
-    targets= random.sample(ATTACK_TARGETS, k=2)
-    ts= start_ts
-    events= []
-    for _ in range(random.randint(30,200)):
-        ts += timedelta(milliseconds=random.randint(100,1500))
-        line= auth_line(ts, False, random.choice(targets), ip, random.randint(1024, 65535))
+    ip = fake.ipv4_public()
+    targets = random.sample(ATTACK_TARGETS, k=2)
+    ts = start_ts
+    events = []
+    for _ in range(random.randint(30, 200)):
+        ts += timedelta(milliseconds=random.randint(100, 1500))
+        line = auth_line(ts, False, random.choice(targets), ip, random.randint(1024, 65535))
         events.append((ts, line, "brute_force"))
     return events
+
 
 def noisy_legit_burst(start_ts):
     ip = fake.ipv4_private()
@@ -69,7 +83,9 @@ def distributed_brute_force(start_ts):
 
 
 def generate(n_normal, n_bursts, n_noisy=2, n_slow=2, n_distributed=2,
-             start=None, window_seconds=600):
+             start=None, window_seconds=600, seed=None):
+    """Return (timestamp, line, label) auth events sorted by time."""
+    _seed(seed)
     start = start or datetime.now()
     events = []
     for _ in range(n_normal):
@@ -86,6 +102,9 @@ def generate(n_normal, n_bursts, n_noisy=2, n_slow=2, n_distributed=2,
             events.extend(scenario(start + timedelta(seconds=random.uniform(0, window_seconds))))
     events.sort(key=lambda e: e[0])
     return events
+
+
+# ------------------------------------------------------------ firewall logs
 
 FW_HOST = "server01"
 SERVER_IP = "10.0.0.5"
@@ -124,26 +143,58 @@ def port_scan(start_ts):
     return events
 
 
-def generate_firewall(n_normal, n_scans, start=None, window_seconds=600):
+def benign_scanner(start_ts):
+    """Internal monitoring host probing 8-12 ports: scan-like but legitimate."""
+    ip = fake.ipv4_private()
+    ts = start_ts
+    events = []
+    for dport in random.sample(range(20, 9000), random.randint(8, 12)):
+        ts += timedelta(seconds=random.uniform(1, 3))
+        line = fw_line(ts, "BLOCK", ip, dport, random.randint(1024, 65535))
+        events.append((ts, line, "normal"))
+    return events
+
+
+def slow_port_scan(start_ts):
+    """Attacker probing one port every 5-10 seconds to stay under a 1-minute threshold."""
+    ip = fake.ipv4_public()
+    ts = start_ts
+    events = []
+    for dport in random.sample(range(1, 10000), random.randint(40, 80)):
+        ts += timedelta(seconds=random.uniform(5, 10))
+        line = fw_line(ts, "BLOCK", ip, dport, random.randint(1024, 65535))
+        events.append((ts, line, "slow_port_scan"))
+    return events
+
+
+def generate_firewall(n_normal, n_scans, n_benign=2, n_slow=2,
+                      start=None, window_seconds=600, seed=None):
     """Return (timestamp, line, label) firewall events sorted by time."""
+    _seed(seed)
     start = start or datetime.now()
     events = [
         normal_fw_event(start + timedelta(seconds=random.uniform(0, window_seconds)))
         for _ in range(n_normal)
     ]
-    for _ in range(n_scans):
-        events.extend(port_scan(start + timedelta(seconds=random.uniform(0, window_seconds))))
+    scenarios = [
+        (n_scans, port_scan),
+        (n_benign, benign_scanner),
+        (n_slow, slow_port_scan),
+    ]
+    for count, scenario in scenarios:
+        for _ in range(count):
+            events.extend(scenario(start + timedelta(seconds=random.uniform(0, window_seconds))))
     events.sort(key=lambda e: e[0])
     return events
 
-def _seed(seed):
-    if seed is not None:
-        random.seed(seed)
-        Faker.seed(seed)
 
 if __name__ == "__main__":
     from collections import Counter
 
-    events = generate(n_normal=1000, n_bursts=5)
+    events = generate(n_normal=1000, n_bursts=5, seed=42)
     print(Counter(label for _, _, label in events))
-    print(f"Total events: {len(events)}")
+    print(f"Total auth events: {len(events)}")
+
+    fw = generate_firewall(n_normal=1000, n_scans=5, seed=42)
+    print(Counter(label for _, _, label in fw))
+    print(f"Total firewall events: {len(fw)}")

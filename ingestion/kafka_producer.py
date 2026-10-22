@@ -24,10 +24,10 @@ def send(events, log_topic, truth_topic):
 
 
 if __name__ == "__main__":
-    auth = generate(n_normal=1000, n_bursts=5)
+    auth = generate(n_normal=1000, n_bursts=5, seed=42)
     send(auth, "auth-logs", "ground-truth")
     print(f"Sent {len(auth)} auth events")
 
-    firewall = generate_firewall(n_normal=1000, n_scans=5)
+    firewall = generate_firewall(n_normal=1000, n_scans=5, seed=42)
     send(firewall, "firewall-logs", "firewall-truth")
     print(f"Sent {len(firewall)} firewall events")

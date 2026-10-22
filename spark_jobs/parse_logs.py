@@ -49,10 +49,10 @@ def parse_firewall(df):
     return parsed.withColumn("ts", ts)
 
 
-def detect_port_scans(parsed, threshold=15):
-    """Return the distinct src_ips that hit >= threshold distinct ports in a 1-minute window."""
+def detect_port_scans(parsed, threshold=15, window="1 minute", slide="10 seconds"):
+    """Return the distinct src_ips that hit >= threshold distinct ports in a window."""
     return (
-        parsed.groupBy(F.window("ts", "1 minute", "10 seconds"), "src_ip")
+        parsed.groupBy(F.window("ts", window, slide), "src_ip")
         .agg(F.countDistinct("dst_port").alias("distinct_ports"))
         .filter(F.col("distinct_ports") >= threshold)
         .select("src_ip")
