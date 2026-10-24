@@ -31,7 +31,10 @@ alerts = (
     logs.filter("failed = 1")
     .withWatermark("ts", "2 minutes")
     .groupBy("src_ip", F.window("ts", "60 seconds"))
-    .agg(F.count("*").alias("failures"))
+    .agg(
+        F.count("*").alias("failures"),
+        F.max("kafka_ts").alias("last_kafka_ts"),  # real arrival time of the triggering event
+    )
     .filter(F.col("failures") >= 10)
 )
 
@@ -42,6 +45,7 @@ def write_to_mongo(batch_df, batch_id):
         F.col("window.start").alias("window_start"),
         F.col("window.end").alias("window_end"),
         "failures",
+        "last_kafka_ts",
     ).collect()
     if not rows:
         return
@@ -54,6 +58,7 @@ def write_to_mongo(batch_df, batch_id):
             "window_start": r["window_start"].isoformat(),
             "window_end": r["window_end"].isoformat(),
             "failures": r["failures"],
+            "last_kafka_ts": r["last_kafka_ts"].isoformat(),
             "detected_at": datetime.datetime.utcnow().isoformat(),
         }
         for r in rows
