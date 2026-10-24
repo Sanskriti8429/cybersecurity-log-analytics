@@ -62,7 +62,7 @@ docs/          Design notes, literature review, diagrams
 ### Evaluation
 - [ ] Scalability benchmarks
 - [ ] Batch vs streaming comparison
-- [ ] Rule-based vs ML comparison
+- [x] Rule-based vs ML comparison
 - [ ] Reproducible experiment scripts and results
 
 ### Dashboard
