@@ -57,7 +57,7 @@ docs/          Design notes, literature review, diagrams
 - [x] Rule-based detection (batch)
 - [x] Rule-based detection (streaming)
 - [x] ML-based detection
-- [ ] Alert storage in MongoDB
+- [x] Alert storage in MongoDB
 
 ### Evaluation
 - [ ] Scalability benchmarks
