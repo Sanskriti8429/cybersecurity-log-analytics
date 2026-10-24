@@ -10,7 +10,7 @@ spark = (
 df = spark.read.parquet("hdfs://namenode:8020/data/cicids/labelled_parquet")
 
 # Drop identifiers that would leak or aren't real features
-df = df.drop("flow_id", "src_ip", "dst_ip", "ts_has_seconds")
+df = df.drop("flow_id", "dst_ip", "ts_has_seconds")
 
 # Group the three near-empty classes into "Other"
 rare = {"Heartbleed", "Infiltration", "Web Attack Sql Injection"}
