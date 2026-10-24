@@ -60,7 +60,7 @@ docs/          Design notes, literature review, diagrams
 - [x] Alert storage in MongoDB
 
 ### Evaluation
-- [ ] Scalability benchmarks
+- [x] Scalability benchmarks
 - [x] Batch vs streaming comparison
 - [x] Rule-based vs ML comparison
 - [ ] Reproducible experiment scripts and results
