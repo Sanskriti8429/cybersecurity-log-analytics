@@ -63,7 +63,7 @@ docs/          Design notes, literature review, diagrams
 - [x] Scalability benchmarks
 - [x] Batch vs streaming comparison
 - [x] Rule-based vs ML comparison
-- [ ] Reproducible experiment scripts and results
+- [x] Reproducible experiment result
 
 ### Dashboard
 - [ ] Live alerts and threat overview
