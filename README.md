@@ -66,10 +66,5 @@ docs/          Design notes, literature review, diagrams
 - [x] Reproducible experiment result
 
 ### Dashboard
-- [ ] Live alerts and threat overview
-- [ ] Attack trends and top sources
-
-### Research
-- [ ] Literature review and comparative analysis
-- [ ] Research gap and objectives
-- [ ] Paper draft
+- [x] Live alerts and threat overview
+- [x] Attack trends and top sources

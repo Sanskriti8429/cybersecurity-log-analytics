@@ -1,0 +1,539 @@
+[
+  {
+    "_id": "6adc8bbe0e44f586a95d8b40",
+    "rule": "brute_force_ssh",
+    "src_ip": "192.168.15.7",
+    "window_start": "2026-10-24T16:14:00",
+    "window_end": "2026-10-24T16:15:00",
+    "failures": 16,
+    "detected_at": "2026-10-24T10:43:10.956582"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b41",
+    "rule": "brute_force_ssh",
+    "src_ip": "192.168.15.7",
+    "window_start": "2026-10-24T16:15:00",
+    "window_end": "2026-10-24T16:16:00",
+    "failures": 17,
+    "detected_at": "2026-10-24T10:43:10.956592"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b42",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-24T16:15:00",
+    "window_end": "2026-10-24T16:16:00",
+    "failures": 20,
+    "detected_at": "2026-10-24T10:43:10.956595"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b43",
+    "rule": "brute_force_ssh",
+    "src_ip": "72.200.19.253",
+    "window_start": "2026-10-24T16:16:00",
+    "window_end": "2026-10-24T16:17:00",
+    "failures": 29,
+    "detected_at": "2026-10-24T10:43:10.956599"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b44",
+    "rule": "brute_force_ssh",
+    "src_ip": "101.137.155.127",
+    "window_start": "2026-10-24T16:17:00",
+    "window_end": "2026-10-24T16:18:00",
+    "failures": 44,
+    "detected_at": "2026-10-24T10:43:10.956602"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b45",
+    "rule": "brute_force_ssh",
+    "src_ip": "172.24.180.16",
+    "window_start": "2026-10-24T16:19:00",
+    "window_end": "2026-10-24T16:20:00",
+    "failures": 14,
+    "detected_at": "2026-10-24T10:43:10.956606"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b46",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-24T16:15:00",
+    "window_end": "2026-10-24T16:16:00",
+    "failures": 32,
+    "detected_at": "2026-10-24T10:43:10.956609"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b47",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-24T16:16:00",
+    "window_end": "2026-10-24T16:17:00",
+    "failures": 77,
+    "detected_at": "2026-10-24T10:43:10.956612"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b48",
+    "rule": "brute_force_ssh",
+    "src_ip": "184.75.192.75",
+    "window_start": "2026-10-24T16:22:00",
+    "window_end": "2026-10-24T16:23:00",
+    "failures": 52,
+    "detected_at": "2026-10-24T10:43:10.956616"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b49",
+    "rule": "brute_force_ssh",
+    "src_ip": "72.200.19.253",
+    "window_start": "2026-10-24T16:15:00",
+    "window_end": "2026-10-24T16:16:00",
+    "failures": 80,
+    "detected_at": "2026-10-24T10:43:10.956619"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b4a",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-24T16:16:00",
+    "window_end": "2026-10-24T16:17:00",
+    "failures": 80,
+    "detected_at": "2026-10-24T10:43:10.956622"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b4b",
+    "rule": "brute_force_ssh",
+    "src_ip": "101.137.155.127",
+    "window_start": "2026-10-24T16:16:00",
+    "window_end": "2026-10-24T16:17:00",
+    "failures": 46,
+    "detected_at": "2026-10-24T10:43:10.956625"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b4c",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-24T16:17:00",
+    "window_end": "2026-10-24T16:18:00",
+    "failures": 79,
+    "detected_at": "2026-10-24T10:43:10.956628"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b4d",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-24T16:17:00",
+    "window_end": "2026-10-24T16:18:00",
+    "failures": 73,
+    "detected_at": "2026-10-24T10:43:10.956631"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b4e",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-24T16:18:00",
+    "window_end": "2026-10-24T16:19:00",
+    "failures": 24,
+    "detected_at": "2026-10-24T10:43:10.956633"
+  },
+  {
+    "_id": "6adc8bbe0e44f586a95d8b4f",
+    "rule": "brute_force_ssh",
+    "src_ip": "184.75.192.75",
+    "window_start": "2026-10-24T16:23:00",
+    "window_end": "2026-10-24T16:24:00",
+    "failures": 57,
+    "detected_at": "2026-10-24T10:43:10.956637"
+  },
+  {
+    "_id": "6adc8cd40e44f586a95d8b51",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:31:00",
+    "window_end": "2026-10-24T16:32:00",
+    "failures": 10,
+    "detected_at": "2026-10-24T10:47:48.257903"
+  },
+  {
+    "_id": "6adc8cd40e44f586a95d8b52",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:32:00",
+    "window_end": "2026-10-24T16:33:00",
+    "failures": 11,
+    "detected_at": "2026-10-24T10:47:48.257913"
+  },
+  {
+    "_id": "6adc8d250e44f586a95d8b54",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:36:00",
+    "window_end": "2026-10-24T16:37:00",
+    "failures": 11,
+    "detected_at": "2026-10-24T10:49:09.922377"
+  },
+  {
+    "_id": "6adc8d250e44f586a95d8b55",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:37:00",
+    "window_end": "2026-10-24T16:38:00",
+    "failures": 11,
+    "detected_at": "2026-10-24T10:49:09.922385"
+  },
+  {
+    "_id": "6adc8d8f0e44f586a95d8b57",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:38:00",
+    "window_end": "2026-10-24T16:39:00",
+    "failures": 11,
+    "detected_at": "2026-10-24T10:50:55.868093"
+  },
+  {
+    "_id": "6adc8d8f0e44f586a95d8b58",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:37:00",
+    "window_end": "2026-10-24T16:38:00",
+    "failures": 16,
+    "detected_at": "2026-10-24T10:50:55.868111"
+  },
+  {
+    "_id": "6adc8d8f0e44f586a95d8b59",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:39:00",
+    "window_end": "2026-10-24T16:40:00",
+    "failures": 11,
+    "detected_at": "2026-10-24T10:50:55.868120"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99be3",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-24T16:27:00",
+    "window_end": "2026-10-24T16:28:00",
+    "failures": 71,
+    "detected_at": "2026-10-24T10:53:12.764966"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99be4",
+    "rule": "brute_force_ssh",
+    "src_ip": "172.24.180.16",
+    "window_start": "2026-10-24T16:29:00",
+    "window_end": "2026-10-24T16:30:00",
+    "failures": 14,
+    "detected_at": "2026-10-24T10:53:12.764973"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99be5",
+    "rule": "brute_force_ssh",
+    "src_ip": "184.75.192.75",
+    "window_start": "2026-10-24T16:32:00",
+    "window_end": "2026-10-24T16:33:00",
+    "failures": 51,
+    "detected_at": "2026-10-24T10:53:12.764976"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99be6",
+    "rule": "brute_force_ssh",
+    "src_ip": "72.200.19.253",
+    "window_start": "2026-10-24T16:25:00",
+    "window_end": "2026-10-24T16:26:00",
+    "failures": 80,
+    "detected_at": "2026-10-24T10:53:12.764980"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99be7",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-24T16:26:00",
+    "window_end": "2026-10-24T16:27:00",
+    "failures": 82,
+    "detected_at": "2026-10-24T10:53:12.764983"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99be8",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-24T16:27:00",
+    "window_end": "2026-10-24T16:28:00",
+    "failures": 79,
+    "detected_at": "2026-10-24T10:53:12.764986"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99be9",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-24T16:28:00",
+    "window_end": "2026-10-24T16:29:00",
+    "failures": 27,
+    "detected_at": "2026-10-24T10:53:12.764989"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99bea",
+    "rule": "brute_force_ssh",
+    "src_ip": "192.168.15.7",
+    "window_start": "2026-10-24T16:25:00",
+    "window_end": "2026-10-24T16:26:00",
+    "failures": 17,
+    "detected_at": "2026-10-24T10:53:12.764992"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99beb",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-24T16:25:00",
+    "window_end": "2026-10-24T16:26:00",
+    "failures": 17,
+    "detected_at": "2026-10-24T10:53:12.764995"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99bec",
+    "rule": "brute_force_ssh",
+    "src_ip": "72.200.19.253",
+    "window_start": "2026-10-24T16:26:00",
+    "window_end": "2026-10-24T16:27:00",
+    "failures": 30,
+    "detected_at": "2026-10-24T10:53:12.764998"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99bed",
+    "rule": "brute_force_ssh",
+    "src_ip": "192.168.15.7",
+    "window_start": "2026-10-24T16:24:00",
+    "window_end": "2026-10-24T16:25:00",
+    "failures": 16,
+    "detected_at": "2026-10-24T10:53:12.765001"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99bee",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-24T16:25:00",
+    "window_end": "2026-10-24T16:26:00",
+    "failures": 31,
+    "detected_at": "2026-10-24T10:53:12.765004"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99bef",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-24T16:26:00",
+    "window_end": "2026-10-24T16:27:00",
+    "failures": 77,
+    "detected_at": "2026-10-24T10:53:12.765007"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99bf0",
+    "rule": "brute_force_ssh",
+    "src_ip": "101.137.155.127",
+    "window_start": "2026-10-24T16:26:00",
+    "window_end": "2026-10-24T16:27:00",
+    "failures": 43,
+    "detected_at": "2026-10-24T10:53:12.765009"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99bf1",
+    "rule": "brute_force_ssh",
+    "src_ip": "101.137.155.127",
+    "window_start": "2026-10-24T16:27:00",
+    "window_end": "2026-10-24T16:28:00",
+    "failures": 47,
+    "detected_at": "2026-10-24T10:53:12.765012"
+  },
+  {
+    "_id": "6adc8e184a9b26488dc99bf2",
+    "rule": "brute_force_ssh",
+    "src_ip": "184.75.192.75",
+    "window_start": "2026-10-24T16:33:00",
+    "window_end": "2026-10-24T16:34:00",
+    "failures": 58,
+    "detected_at": "2026-10-24T10:53:12.765015"
+  },
+  {
+    "_id": "6adc8e464a9b26488dc99bf4",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:41:00",
+    "window_end": "2026-10-24T16:42:00",
+    "failures": 11,
+    "detected_at": "2026-10-24T10:53:58.639258"
+  },
+  {
+    "_id": "6adc8e464a9b26488dc99bf5",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:42:00",
+    "window_end": "2026-10-24T16:43:00",
+    "failures": 11,
+    "detected_at": "2026-10-24T10:53:58.639264"
+  },
+  {
+    "_id": "6adc8e4e4a9b26488dc99bf7",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:42:00",
+    "window_end": "2026-10-24T16:43:00",
+    "failures": 16,
+    "detected_at": "2026-10-24T10:54:06.433968"
+  },
+  {
+    "_id": "6adc8e4e4a9b26488dc99bf8",
+    "rule": "brute_force_ssh",
+    "src_ip": "210.119.91.146",
+    "window_start": "2026-10-24T16:43:00",
+    "window_end": "2026-10-24T16:44:00",
+    "failures": 14,
+    "detected_at": "2026-10-24T10:54:06.433976"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c662ff",
+    "rule": "brute_force_ssh",
+    "src_ip": "192.168.15.7",
+    "window_start": "2026-10-25T01:25:00",
+    "window_end": "2026-10-25T01:26:00",
+    "failures": 17,
+    "last_kafka_ts": "2026-10-24T19:53:38.169000",
+    "detected_at": "2026-10-24T19:53:43.762412"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66300",
+    "rule": "brute_force_ssh",
+    "src_ip": "72.200.19.253",
+    "window_start": "2026-10-25T01:25:00",
+    "window_end": "2026-10-25T01:26:00",
+    "failures": 39,
+    "last_kafka_ts": "2026-10-24T19:53:38.169000",
+    "detected_at": "2026-10-24T19:53:43.762426"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66301",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-25T01:27:00",
+    "window_end": "2026-10-25T01:28:00",
+    "failures": 79,
+    "last_kafka_ts": "2026-10-24T19:53:38.372000",
+    "detected_at": "2026-10-24T19:53:43.762434"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66302",
+    "rule": "brute_force_ssh",
+    "src_ip": "101.137.155.127",
+    "window_start": "2026-10-25T01:27:00",
+    "window_end": "2026-10-25T01:28:00",
+    "failures": 78,
+    "last_kafka_ts": "2026-10-24T19:53:38.372000",
+    "detected_at": "2026-10-24T19:53:43.762441"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66303",
+    "rule": "brute_force_ssh",
+    "src_ip": "184.75.192.75",
+    "window_start": "2026-10-25T01:32:00",
+    "window_end": "2026-10-25T01:33:00",
+    "failures": 10,
+    "last_kafka_ts": "2026-10-24T19:53:38.552000",
+    "detected_at": "2026-10-24T19:53:43.762449"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66304",
+    "rule": "brute_force_ssh",
+    "src_ip": "72.200.19.253",
+    "window_start": "2026-10-25T01:26:00",
+    "window_end": "2026-10-25T01:27:00",
+    "failures": 71,
+    "last_kafka_ts": "2026-10-24T19:53:38.243000",
+    "detected_at": "2026-10-24T19:53:43.762456"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66305",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-25T01:26:00",
+    "window_end": "2026-10-25T01:27:00",
+    "failures": 68,
+    "last_kafka_ts": "2026-10-24T19:53:38.244000",
+    "detected_at": "2026-10-24T19:53:43.762463"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66306",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-25T01:27:00",
+    "window_end": "2026-10-25T01:28:00",
+    "failures": 70,
+    "last_kafka_ts": "2026-10-24T19:53:38.372000",
+    "detected_at": "2026-10-24T19:53:43.762471"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66307",
+    "rule": "brute_force_ssh",
+    "src_ip": "181.158.228.40",
+    "window_start": "2026-10-25T01:28:00",
+    "window_end": "2026-10-25T01:29:00",
+    "failures": 41,
+    "last_kafka_ts": "2026-10-24T19:53:38.438000",
+    "detected_at": "2026-10-24T19:53:43.762479"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66308",
+    "rule": "brute_force_ssh",
+    "src_ip": "192.168.15.7",
+    "window_start": "2026-10-25T01:26:00",
+    "window_end": "2026-10-25T01:27:00",
+    "failures": 15,
+    "last_kafka_ts": "2026-10-24T19:53:38.208000",
+    "detected_at": "2026-10-24T19:53:43.762486"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c66309",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-25T01:26:00",
+    "window_end": "2026-10-25T01:27:00",
+    "failures": 63,
+    "last_kafka_ts": "2026-10-24T19:53:38.243000",
+    "detected_at": "2026-10-24T19:53:43.762493"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c6630a",
+    "rule": "brute_force_ssh",
+    "src_ip": "223.226.157.95",
+    "window_start": "2026-10-25T01:28:00",
+    "window_end": "2026-10-25T01:29:00",
+    "failures": 64,
+    "last_kafka_ts": "2026-10-24T19:53:38.449000",
+    "detected_at": "2026-10-24T19:53:43.762501"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c6630b",
+    "rule": "brute_force_ssh",
+    "src_ip": "172.24.180.16",
+    "window_start": "2026-10-25T01:29:00",
+    "window_end": "2026-10-25T01:30:00",
+    "failures": 11,
+    "last_kafka_ts": "2026-10-24T19:53:38.473000",
+    "detected_at": "2026-10-24T19:53:43.762508"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c6630c",
+    "rule": "brute_force_ssh",
+    "src_ip": "184.75.192.75",
+    "window_start": "2026-10-25T01:33:00",
+    "window_end": "2026-10-25T01:34:00",
+    "failures": 75,
+    "last_kafka_ts": "2026-10-24T19:53:38.580000",
+    "detected_at": "2026-10-24T19:53:43.762515"
+  },
+  {
+    "_id": "6add0cc776bbc8da47c6630d",
+    "rule": "brute_force_ssh",
+    "src_ip": "184.75.192.75",
+    "window_start": "2026-10-25T01:34:00",
+    "window_end": "2026-10-25T01:35:00",
+    "failures": 24,
+    "last_kafka_ts": "2026-10-24T19:53:38.583000",
+    "detected_at": "2026-10-24T19:53:43.762522"
+  }
+]

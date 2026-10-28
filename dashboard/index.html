@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --border: #e5e7eb;
+    --text: #14161a; --text-dim: #6b7280; --text-dimmer: #8b919b;
+    --blue: #2563eb; --blue-soft: #eff6ff;
+    --red: #dc2626; --amber: #f59e0b; --green: #047857;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  nav {
+    width: 240px; background: var(--card); border-right: 1px solid var(--border);
+    padding: 24px 16px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  .brand { font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+  .brand-sub { color: var(--text-dimmer); font-size: 0.8rem; margin-bottom: 20px; }
+  .nav-group-label { font-size: 0.72rem; font-weight: 700; color: var(--text-dimmer); text-transform: uppercase; letter-spacing: 0.06em; margin: 18px 0 6px 6px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px;
+    cursor: pointer; font-size: 0.92rem; font-weight: 500; color: var(--text); margin-bottom: 2px;
+    transition: background 0.12s ease;
+  }
+  .nav-item:hover { background: #f3f4f6; }
+  .nav-item.active { background: var(--blue-soft); color: var(--blue); font-weight: 700; }
+  .nav-refresh {
+    margin-top: 24px; width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border);
+    background: #fff; color: var(--text); font-weight: 600; cursor: pointer; font-size: 0.88rem;
+  }
+  .nav-refresh:hover { border-color: var(--blue); color: var(--blue); }
+  .nav-meta { font-size: 0.76rem; color: var(--text-dimmer); margin-top: 10px; }
+
+  main { flex: 1; padding: 36px 44px; max-width: 1200px; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  h1 { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; }
+  .page-sub { color: var(--text-dim); font-size: 0.95rem; margin-top: 2px; margin-bottom: 24px; }
+  .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 2px; }
+  .section-desc { color: var(--text-dimmer); font-size: 0.86rem; margin-bottom: 14px; }
+
+  .summary-box {
+    background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--blue);
+    border-radius: 12px; padding: 20px 24px; font-size: 1.05rem; line-height: 1.6; margin-bottom: 24px;
+  }
+  .summary-box b { color: var(--blue); }
+  .summary-box .danger { color: var(--red); font-weight: 700; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .kpi-icon { font-size: 1.1rem; margin-bottom: 6px; }
+  .kpi-label { font-size: 0.72rem; font-weight: 700; color: var(--text-dimmer); text-transform: uppercase; letter-spacing: 0.05em; }
+  .kpi-value { font-family: 'SF Mono', Consolas, monospace; font-size: 1.8rem; font-weight: 700; margin-top: 2px; }
+  .kpi-why { font-size: 0.76rem; color: var(--text-dimmer); margin-top: 6px; line-height: 1.35; }
+
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 18px; }
+  .grid-2 { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 9px 10px; font-size: 0.87rem; }
+  th { color: var(--text-dimmer); font-weight: 600; font-size: 0.74rem; text-transform: uppercase; border-bottom: 2px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  .ip { font-family: 'SF Mono', Consolas, monospace; font-weight: 600; }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
+  .badge-high { background: #fce8ec; color: var(--red); }
+  .badge-medium { background: #fef3e0; color: var(--amber); }
+  .badge-low { background: var(--blue-soft); color: var(--blue); }
+
+  .rule-card { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; }
+  .rule-name { font-weight: 700; }
+  .rule-code { font-family: 'SF Mono', Consolas, monospace; font-size: 0.82rem; color: var(--blue); background: var(--blue-soft); padding: 2px 8px; border-radius: 6px; display: inline-block; margin: 6px 0; }
+  .rule-why { color: var(--text-dim); font-size: 0.88rem; }
+
+  .pipe-step { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--blue-soft); color: var(--blue); font-weight: 700; font-size: 0.8rem; margin-right: 8px; }
+  .status-ok { color: var(--green); font-weight: 700; }
+  code.topic { display: inline-block; background: #f3f4f6; padding: 2px 8px; border-radius: 6px; font-family: monospace; font-size: 0.82rem; margin: 2px 4px 2px 0; }
+
+  .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .tech-badge { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .tech-badge .name { font-weight: 700; font-size: 0.95rem; }
+  .tech-badge .desc { color: var(--text-dimmer); font-size: 0.82rem; margin-top: 2px; }
+
+  .info-box { background: var(--blue-soft); border: 1px solid #bfdbfe; border-radius: 10px; padding: 14px 18px; font-size: 0.88rem; color: #1e3a5f; margin: 10px 0 20px; }
+  .empty { text-align: center; padding: 60px 20px; color: var(--text-dimmer); }
+  canvas { max-height: 280px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">🛡️ Security Dashboard</div>
+  <div class="brand-sub">Brute-force attack detection</div>
+
+  <div class="nav-group-label">Live Data</div>
+  <div class="nav-item active" data-page="overview">📊 Overview</div>
+  <div class="nav-item" data-page="trends">📈 Attack Trends</div>
+  <div class="nav-item" data-page="sources">🎯 Top Sources</div>
+
+  <div class="nav-group-label">How It Works</div>
+  <div class="nav-item" data-page="workflow">🔧 Workflow</div>
+  <div class="nav-item" data-page="rules">📋 Detection Rules</div>
+  <div class="nav-item" data-page="ml">🤖 ML Model</div>
+  <div class="nav-item" data-page="stack">🧱 Tech Stack</div>
+
+  <button class="nav-refresh" onclick="main()">↻ Refresh data</button>
+  <div class="nav-meta" id="loadedAt"></div>
+</nav>
+
+<main>
+
+  <section class="page active" id="page-overview"></section>
+  <section class="page" id="page-trends"></section>
+  <section class="page" id="page-sources"></section>
+
+  <section class="page" id="page-workflow">
+    <h1>🔧 How This Works</h1>
+    <div class="page-sub">The real pipeline behind this dashboard</div>
+    <div class="summary-box">
+      An attack happens → <b>Kafka</b> receives the raw log event → <b>Spark</b> reads it continuously,
+      detects the pattern, and writes an alert to <b>MongoDB</b> → this dashboard reads MongoDB.
+      Separately, the same kind of logs are stored permanently in <b>Hadoop (HDFS)</b> and used to train
+      a machine learning model in <b>Spark MLlib</b>.
+    </div>
+    <div class="grid-3">
+      <div class="panel">
+        <div><span class="pipe-step">1</span><b>Kafka</b></div>
+        <div class="section-desc">Receives raw log events</div>
+        <code class="topic">auth-logs</code><code class="topic">firewall-logs</code><code class="topic">ground-truth</code>
+      </div>
+      <div class="panel">
+        <div><span class="pipe-step">2</span><b>HDFS (Hadoop)</b></div>
+        <div class="section-desc">Permanent storage for raw + CICIDS2017 data</div>
+        <div class="status-ok">● 2.83M rows stored</div>
+      </div>
+      <div class="panel">
+        <div><span class="pipe-step">3</span><b>MongoDB</b></div>
+        <div class="section-desc">Stores every alert Spark detects</div>
+        <div class="status-ok" id="mongoStatus">● loading…</div>
+      </div>
+    </div>
+    <div class="info-box">
+      This page shows the architecture — it can't query Docker containers directly from a browser file.
+      To show it <b>live</b>, run these in a terminal during your demo:<br><br>
+      <code>docker exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list</code><br>
+      <code>docker exec namenode hdfs dfs -ls /data/cicids</code><br>
+      <code>python ingestion/kafka_producer.py</code>
+    </div>
+    <div class="section-title">What Spark is doing</div>
+    <ul style="margin-left:20px; color:var(--text-dim); line-height:1.8;">
+      <li><b>Spark Structured Streaming</b> — reads Kafka continuously, checks every 60-second window for 10+ failed logins from one IP, writes matches to MongoDB within seconds</li>
+      <li><b>Spark Batch</b> — loaded 2.83 million rows of the CICIDS2017 intrusion-detection dataset into HDFS as cleaned Parquet</li>
+      <li><b>Spark MLlib</b> — trained a Random Forest classifier on that data to recognize 13 attack types</li>
+    </ul>
+  </section>
+
+  <section class="page" id="page-rules">
+    <h1>📋 Detection Rules</h1>
+    <div class="page-sub">The exact logic Spark uses to decide something is an attack</div>
+    <div class="rule-card">
+      <div class="rule-name">Rule A — Fast brute force</div>
+      <div class="rule-code">10+ failed logins from one IP within 60 seconds</div>
+      <div class="rule-why">Catches the most common attack: a script rapidly trying passwords. This rule currently feeds this dashboard.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-name">Rule B — Slow brute force</div>
+      <div class="rule-code">20+ failed logins from one IP within 10 minutes</div>
+      <div class="rule-why">Catches attackers who deliberately slow down to avoid Rule A.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-name">Rule C — Distributed / credential stuffing</div>
+      <div class="rule-code">20+ failures on one account from 5+ IPs within 60 seconds</div>
+      <div class="rule-why">Catches botnets trying the same stolen password across many machines at once.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-name">Port scan rule</div>
+      <div class="rule-code">15+ distinct ports touched by one IP within a time window</div>
+      <div class="rule-why">Flags reconnaissance before a real attack.</div>
+    </div>
+    <div class="section-title" style="margin-top:20px;">Why three rules instead of one?</div>
+    <p style="color:var(--text-dim); line-height:1.6;">
+      Testing on harder synthetic attack data showed a single rule (Rule A alone) caught classic brute
+      force almost perfectly, but completely missed slow and distributed attacks (0 of 301 such events).
+      Adding Rules B and C raised recall from <b>66.5% to 95.3%</b>, at a small cost in false positives
+      (11 → 20 out of thousands of normal events).
+    </p>
+  </section>
+
+  <section class="page" id="page-ml">
+    <h1>🤖 Machine Learning Model</h1>
+    <div class="page-sub">A Random Forest classifier trained on 2.83 million real network flows (CICIDS2017)</div>
+    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+      <div class="kpi-card"><div class="kpi-icon">🌳</div><div class="kpi-label">Trees</div><div class="kpi-value">100</div></div>
+      <div class="kpi-card"><div class="kpi-icon">🏷️</div><div class="kpi-label">Attack types</div><div class="kpi-value">13</div></div>
+      <div class="kpi-card"><div class="kpi-icon">📊</div><div class="kpi-label">Training rows</div><div class="kpi-value">2.8M</div></div>
+    </div>
+    <div class="section-title">Accuracy vs. fairness tradeoff</div>
+    <div class="panel">
+      <table>
+        <thead><tr><th>Model</th><th>Accuracy</th><th>Weighted F1</th><th>Macro F1 (fairness)</th></tr></thead>
+        <tbody>
+          <tr><td>Baseline (unweighted)</td><td>0.985</td><td>0.984</td><td>0.665</td></tr>
+          <tr><td>Class-weighted</td><td>0.972</td><td>0.979</td><td>0.732</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box">
+      💡 <b>Why macro F1 matters more than accuracy:</b> accuracy looks great (98.5%) even when the model
+      completely misses rare attacks, since normal traffic is 80% of the data. Macro F1 treats every attack
+      type equally — class weighting improved it by 10 points, catching rare attacks the baseline missed.
+    </div>
+    <div class="section-title">Rules vs. Machine Learning — which wins?</div>
+    <div class="panel">
+      <table>
+        <thead><tr><th>Attack type</th><th>Method</th><th>Precision</th><th>Recall</th></tr></thead>
+        <tbody>
+          <tr><td>Port scan</td><td>Rule (15 ports/min)</td><td>0.005</td><td>1.000</td></tr>
+          <tr><td>Port scan</td><td>ML model</td><td>0.500</td><td>1.000</td></tr>
+          <tr><td>SSH brute force</td><td>Rule (10 conns/60s)</td><td>0.500</td><td>1.000</td></tr>
+          <tr><td>SSH brute force</td><td>ML model</td><td>0.167</td><td>1.000</td></tr>
+          <tr><td>FTP brute force</td><td>Rule (10 conns/60s)</td><td>0.500</td><td>1.000</td></tr>
+          <tr><td>FTP brute force</td><td>ML model</td><td>1.000</td><td>1.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-desc">Neither approach wins every time — ML is far more precise on port scans, but the simple rule is actually better on SSH brute force here. That's a real, measured result.</p>
+  </section>
+
+  <section class="page" id="page-stack">
+    <h1>🧱 Technology Stack</h1>
+    <div class="page-sub">Every system this project runs on</div>
+    <div class="tech-grid">
+      <div class="tech-badge"><div class="name">📨 Apache Kafka</div><div class="desc">Ingests raw log events</div></div>
+      <div class="tech-badge"><div class="name">⚡ Apache Spark</div><div class="desc">Batch + streaming processing</div></div>
+      <div class="tech-badge"><div class="name">🗄️ Hadoop HDFS</div><div class="desc">Durable storage, 2.8M+ rows</div></div>
+      <div class="tech-badge"><div class="name">🌲 Spark MLlib</div><div class="desc">Random Forest classifier</div></div>
+      <div class="tech-badge"><div class="name">🍃 MongoDB</div><div class="desc">Alert storage</div></div>
+      <div class="tech-badge"><div class="name">🐳 Docker Compose</div><div class="desc">Runs the whole cluster</div></div>
+      <div class="tech-badge"><div class="name">🐧 Kali Linux</div><div class="desc">Real attack simulation (Hydra, Nmap)</div></div>
+      <div class="tech-badge"><div class="name">📈 Chart.js</div><div class="desc">This dashboard</div></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ---------- Navigation: one active page, always ----------
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById('page-' + item.dataset.page).classList.add('active');
+  });
+});
+
+// ---------- Load data ----------
+async function main() {
+  let alerts = [];
+  try {
+    const res = await fetch('alerts.json');
+    alerts = await res.json();
+  } catch (e) {
+    document.getElementById('page-overview').innerHTML =
+      '<div class="empty">Could not load alerts.json. Run <code>python dashboard/export_alerts.py</code> first, ' +
+      'and open this page via <code>python -m http.server</code> in the dashboard folder (not by double-clicking the file).</div>';
+    document.getElementById('mongoStatus').textContent = '● not reachable';
+    document.getElementById('mongoStatus').style.color = '#dc2626';
+    return;
+  }
+
+  document.getElementById('loadedAt').textContent = 'Loaded: ' + new Date().toLocaleTimeString();
+  document.getElementById('mongoStatus').textContent = `● Connected — ${alerts.length} alerts stored`;
+
+  if (!alerts.length) {
+    ['overview','trends','sources'].forEach(p =>
+      document.getElementById('page-' + p).innerHTML = '<div class="empty">No attacks detected yet. Run the streaming detector and producer, then refresh.</div>');
+    return;
+  }
+
+  alerts.forEach(a => { a.detected_at = new Date(a.detected_at); a.window_start = new Date(a.window_start); });
+  const risk = f => f > 60 ? 'High' : f > 20 ? 'Medium' : 'Low';
+  alerts.forEach(a => a.risk = risk(a.failures));
+
+  const uniqueIPs = [...new Set(alerts.map(a => a.src_ip))];
+  const worst = alerts.reduce((m, a) => a.failures > m.failures ? a : m, alerts[0]);
+  const highRisk = alerts.filter(a => a.risk === 'High').length;
+
+  const bySrc = {};
+  alerts.forEach(a => {
+    if (!bySrc[a.src_ip]) bySrc[a.src_ip] = { times: 0, worst: 0, first: a.detected_at, last: a.detected_at };
+    const e = bySrc[a.src_ip];
+    e.times++; e.worst = Math.max(e.worst, a.failures);
+    if (a.detected_at < e.first) e.first = a.detected_at;
+    if (a.detected_at > e.last) e.last = a.detected_at;
+  });
+  const ranked = Object.entries(bySrc).sort((a, b) => b[1].times - a[1].times);
+
+  // ===== OVERVIEW =====
+  document.getElementById('page-overview').innerHTML = `
+    <h1>🛡️ Security Dashboard</h1>
+    <div class="page-sub">Brute-force login attack detection</div>
+    <div class="summary-box">
+      <b>${uniqueIPs.length} different computers</b> tried to break into your system by guessing passwords repeatedly.
+      This was caught <b>${alerts.length} separate times</b>. The worst attacker, from
+      <span class="danger">${worst.src_ip}</span>, tried <span class="danger">${worst.failures} passwords in a single minute</span>.
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-icon">🌐</div><div class="kpi-label">Attacking computers</div><div class="kpi-value">${uniqueIPs.length}</div><div class="kpi-why">Each is a separate computer that tried to guess a password.</div></div>
+      <div class="kpi-card"><div class="kpi-icon">🚨</div><div class="kpi-label">Times caught</div><div class="kpi-value">${alerts.length}</div><div class="kpi-why">Every time a computer crossed the threshold.</div></div>
+      <div class="kpi-card"><div class="kpi-icon">⚡</div><div class="kpi-label">Worst attack (pwds/min)</div><div class="kpi-value">${worst.failures}</div><div class="kpi-why">The fastest password-guessing burst caught.</div></div>
+      <div class="kpi-card"><div class="kpi-icon">🔥</div><div class="kpi-label">High-risk alerts</div><div class="kpi-value">${highRisk}</div><div class="kpi-why">60+ passwords/min — needs attention first.</div></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="section-title">Who is attacking you</div>
+        <div class="section-desc">💡 An IP appearing many times with a high "worst attempt" is the most dangerous.</div>
+        <div class="panel"><table>
+          <thead><tr><th>Attacker (IP)</th><th>Times caught</th><th>Worst attempt</th><th>First seen</th><th>Last seen</th><th>Risk</th></tr></thead>
+          <tbody>${ranked.map(([ip, d]) => `<tr>
+            <td class="ip">${ip}</td><td>${d.times}</td><td>${d.worst}</td>
+            <td>${d.first.toLocaleTimeString()}</td><td>${d.last.toLocaleTimeString()}</td>
+            <td><span class="badge badge-${risk(d.worst).toLowerCase()}">${risk(d.worst)}</span></td>
+          </tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+      <div>
+        <div class="section-title">Risk breakdown</div>
+        <div class="section-desc">Low ≤20/min · Medium 21–60/min · High 60+/min</div>
+        <div class="panel"><canvas id="riskPie"></canvas></div>
+      </div>
+    </div>
+  `;
+
+  const riskCounts = { Low: 0, Medium: 0, High: 0 };
+  alerts.forEach(a => riskCounts[a.risk]++);
+  new Chart(document.getElementById('riskPie'), {
+    type: 'doughnut',
+    data: { labels: ['Low', 'Medium', 'High'], datasets: [{ data: [riskCounts.Low, riskCounts.Medium, riskCounts.High], backgroundColor: ['#2563eb', '#f59e0b', '#dc2626'] }] },
+    options: { plugins: { legend: { position: 'bottom' } } }
+  });
+
+  // ===== ATTACK TRENDS =====
+  document.getElementById('page-trends').innerHTML = `
+    <h1>📈 Attack Trends</h1>
+    <div class="page-sub">When attacks happened, and which rules caught them</div>
+    <div class="section-title">When attacks happened</div>
+    <div class="section-desc">Each bar is a 5-minute window.</div>
+    <div class="panel"><canvas id="timelineChart"></canvas></div>
+    <div class="grid-2">
+      <div class="panel"><div class="section-title">By detection rule</div><canvas id="ruleChart"></canvas></div>
+      <div class="panel"><div class="section-title">By risk level</div><canvas id="riskBarChart"></canvas></div>
+    </div>
+  `;
+
+  const byBucket = {};
+  alerts.forEach(a => {
+    const bucket = new Date(a.window_start);
+    bucket.setMinutes(Math.floor(bucket.getMinutes() / 5) * 5, 0, 0);
+    const k = bucket.toLocaleString();
+    byBucket[k] = (byBucket[k] || 0) + 1;
+  });
+  new Chart(document.getElementById('timelineChart'), {
+    type: 'bar',
+    data: { labels: Object.keys(byBucket), datasets: [{ label: 'Attacks caught', data: Object.values(byBucket), backgroundColor: '#2563eb' }] },
+    options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+  });
+
+  const byRule = {};
+  alerts.forEach(a => byRule[a.rule] = (byRule[a.rule] || 0) + 1);
+  new Chart(document.getElementById('ruleChart'), {
+    type: 'bar',
+    data: { labels: Object.keys(byRule), datasets: [{ label: 'Count', data: Object.values(byRule), backgroundColor: '#2563eb' }] },
+    options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true } } }
+  });
+
+  new Chart(document.getElementById('riskBarChart'), {
+    type: 'bar',
+    data: { labels: ['Low', 'Medium', 'High'], datasets: [{ data: [riskCounts.Low, riskCounts.Medium, riskCounts.High], backgroundColor: ['#2563eb', '#f59e0b', '#dc2626'] }] },
+    options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+  });
+
+  // ===== TOP SOURCES =====
+  document.getElementById('page-sources').innerHTML = `
+    <h1>🎯 Top Attacking Sources</h1>
+    <div class="page-sub">Ranked by detection frequency and severity</div>
+    <div class="section-title">Most persistent attackers</div>
+    <div class="panel"><canvas id="sourcesChart"></canvas></div>
+    <details style="margin-top:20px;">
+      <summary style="cursor:pointer; font-weight:600;">See every individual alert (raw log)</summary>
+      <div class="panel" style="margin-top:10px;"><table>
+        <thead><tr><th>When</th><th>Attacker IP</th><th>Passwords tried</th><th>Rule</th><th>Risk</th></tr></thead>
+        <tbody>${[...alerts].sort((a,b) => b.detected_at - a.detected_at).map(a => `<tr>
+          <td>${a.detected_at.toLocaleTimeString()}</td><td class="ip">${a.src_ip}</td><td>${a.failures}</td>
+          <td>${a.rule}</td><td><span class="badge badge-${a.risk.toLowerCase()}">${a.risk}</span></td>
+        </tr>`).join('')}</tbody>
+      </table></div>
+    </details>
+  `;
+
+  const top = ranked.slice(0, 10);
+  new Chart(document.getElementById('sourcesChart'), {
+    type: 'bar',
+    data: { labels: top.map(([ip]) => ip), datasets: [{ label: 'Times caught', data: top.map(([, d]) => d.times), backgroundColor: '#2563eb' }] },
+    options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+  });
+}
+main();
+</script>
+</body>
+</html>
