@@ -3,3 +3,6 @@ kafka-python
 pymongo
 faker
 pandas
+plotly
+pymongo
+requests
